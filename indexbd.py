@@ -15,7 +15,9 @@ libro = openpyxl.load_workbook("SIMAT.xlsx",data_only=True)
 #Indicar con cuál hoja se va a trabajar
 hoja = libro.active
 #Qué rango voy a trabajar 
-celdas = hoja["A1" : "I2835"]
+#celdas = hoja["A1" : "I2835"]
+#https://www.imd.guru/sistemas/python/openpyxl.html
+celdas = hoja[hoja.dimensions]
 
 class Estudiantes:
     db_name = 'bdnuevacolombia.db'
@@ -301,11 +303,15 @@ class Estudiantes:
                 #verificar si el estudiante ya fue llevado a la bd (estudiante[3] not in db_filas)
                 #por medio del número de identificación
                 if bandera == False:
+                    if (estudiante[5] is None):     # Si el apellido2 es nulo le coloca vacio
+                        estudiante[5] = ""
+                    if (estudiante[7] is None):     # Si el nombre2 es nulo le coloca vacio
+                        estudiante[7] = ""
                     consulta = "INSERT INTO estudiantes VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
                     parametros = (estudiante[3],estudiante[1],
                                 estudiante[2],estudiante[4],
                                 estudiante[5],estudiante[6],
-                                estudiante[7],0)
+                                estudiante[7],0)                
                     self.ejecute_consulta(consulta, parametros)
                     #print (f"El estudiante {estudiante[4]} {estudiante[5]} {estudiante[6]} {estudiante[7]} pertenece al curso {estudiante[2]}")
         self.obtener_estudiantes()

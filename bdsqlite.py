@@ -5,6 +5,7 @@ from tkinter import ttk
 from tkinter import *
 
 import sqlite3
+import tkinter
 
 class Estudiantes:
     db_name = 'bdestudiantes.db'
@@ -28,7 +29,7 @@ class Estudiantes:
         self.nombre = Entry(frame)
         self.nombre.grid(row = 2, column = 1)
 
-        #Botón Agrear estudiante
+        #Botón Agregar estudiante
         #sticky: Va desde W(Este) hasta E(Oeste) - ocupa todo el ancho
         ttk.Button(frame, text = "Guardar Estudiante", command=self.add_estudiante).grid(row = 3, columnspan = 2, sticky = W + E)
 
@@ -37,10 +38,12 @@ class Estudiantes:
         self.message.grid(row = 3, column = 0, columnspan= 2, sticky=W + E)
                 
         #Tabla
-        self.tree = ttk.Treeview(height=10, columns=2)      #height (filas en la tabla) columns(campos en la tabla)
-        self.tree.grid(row = 4, column = 0, columnspan=2)
-        self.tree.heading('#0', text="Identificación", anchor= CENTER)
-        self.tree.heading('#1', text="Nombre", anchor= CENTER)
+        self.tree = ttk.Treeview(height=10, columns=("#1", "#2", "#3"))      #height (filas en la tabla) columns(campos en la tabla)
+        self.tree.grid(row = 4, column = 0, columnspan=3)
+        self.tree.heading("#0", text="Identificación", anchor= CENTER)
+        self.tree.heading("#1", text="Nombre", anchor= CENTER)
+        self.tree.heading("#2", text="Asistió", anchor= CENTER)
+        self.tree.heading("#3", text="Votó", anchor= CENTER)
 
         #Botones
         ttk.Button(text="ELIMINAR", command = self.borrar_estudiante).grid(row=5, column=0, sticky= W + E)
